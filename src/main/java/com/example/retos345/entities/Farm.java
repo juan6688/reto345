@@ -41,10 +41,6 @@ public class Farm implements Serializable{
 
     
 
-    
-
-    
-
     //***** RELACIONES *****
     //Relación uno a uno. Una Farm tiene un Category relacionada.
     @ManyToOne(optional = true)
