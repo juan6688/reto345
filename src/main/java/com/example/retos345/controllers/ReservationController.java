@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.retos345.entities.Client;
+import com.example.retos345.entities.ReportClient;
 import com.example.retos345.entities.Reservation;
 import com.example.retos345.services.ReservationService;
 
 @Service
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/Reservation")
 public class ReservationController {    
 
@@ -58,5 +62,20 @@ public class ReservationController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
     
+    @GetMapping("/report-dates/{start}/{end}")
+    public ResponseEntity<List<Reservation>> getReservationsReportDates(@PathVariable("start") String start, @PathVariable("end") String end){
+        return new ResponseEntity<List<Reservation>>(this.reservationService.getReservationsReportDates(start, end),HttpStatus.OK);
+    }
+
+    @GetMapping("/report-status")
+    public ResponseEntity<String> getReservationsReportStatus(){
+        return new ResponseEntity<String>(this.reservationService.getReservationsReportStatus(), HttpStatus.OK);
+    }
+
+    @GetMapping("/report-clients")
+    public ResponseEntity<List<ReportClient>> getReservationsReportClients(){
+        return new ResponseEntity<List<ReportClient>>(this.reservationService.getReservationsReportClients(), HttpStatus.OK);
+    }
+
 
 }
